@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0.044510838, b: 0.990566, a: 1}
   m_FlipX: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   bigBulletPrefab: {fileID: 8926540691098824659, guid: b7c66d24a205e2a45bb949ffbfffceb5, type: 3}
   defaultShootingInterval: 0.4
   bulletSpeed: 20
-  maxShootingDistance: 5
+  maxShootingDistance: 6
 --- !u!50 &3309027443473477775
 Rigidbody2D:
   serializedVersion: 4
