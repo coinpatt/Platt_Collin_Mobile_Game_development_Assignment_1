@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3309027443473477775}
   - component: {fileID: 5797282581393367601}
   - component: {fileID: 7429583892074994628}
+  - component: {fileID: 3300743992736637200}
   - component: {fileID: 8515668624467316899}
   m_Layer: 0
   m_Name: MainCharacter
@@ -131,11 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1092a606242978e44b2d291efd06f7e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8926540691098824659, guid: fe6bf606aeeda604a99ba7047fedeee5, type: 3}
-  bigBulletPrefab: {fileID: 8926540691098824659, guid: b7c66d24a205e2a45bb949ffbfffceb5, type: 3}
-  defaultShootingInterval: 0.4
-  bulletSpeed: 20
+  objectPoolTag: Bullet
   maxShootingDistance: 6
+  currentBulletData: {fileID: 0}
 --- !u!50 &3309027443473477775
 Rigidbody2D:
   serializedVersion: 4
@@ -187,6 +186,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
   targetTag: Reward
+--- !u!114 &3300743992736637200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668302514588869088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8898ec2a1f4da349a5368de8f716dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 1
 --- !u!114 &8515668624467316899
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4588054480932338786}
   - component: {fileID: 4588054480932338812}
   - component: {fileID: 3921125489229928967}
-  - component: {fileID: -531017935667437107}
+  - component: {fileID: -4094255780499206582}
   - component: {fileID: 3210637161745048484}
+  - component: {fileID: -8770231450245129814}
   m_Layer: 0
   m_Name: Enemysmall
   m_TagString: Enemy
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 994375773
+  m_SortingLayer: 4
   m_SortingOrder: 6
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 958751ec882ac914d953eb37c6c1b97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1
 --- !u!61 &3921125489229928967
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -127,7 +128,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-531017935667437107
+--- !u!114 &-4094255780499206582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,14 +137,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4588054480932338787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd776e514d89d184c8cde82ea221c5d8, type: 3}
+  m_Script: {fileID: 11500000, guid: f767f7e0cb893e34bb88e0c06829df47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  spawnObjects:
-  - gameObject: {fileID: 7075505982276528811, guid: ee9d2ec43febf9840a4863974922f11c, type: 3}
-    spawnChance: 100
-  spawnDelay: 0
+  healthData: {fileID: 11400000, guid: 2e7c89013a21dcd498981a6583303dd4, type: 2}
+  rewardSpawnChance: 50
+  rewardPoolTag: Reward
 --- !u!50 &3210637161745048484
 Rigidbody2D:
   serializedVersion: 4
@@ -165,3 +164,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-8770231450245129814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588054480932338787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de210cb6a6664d4bb482e89718033df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolTag: Enemy

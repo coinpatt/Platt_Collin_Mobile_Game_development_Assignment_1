@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf22d39ed5394e4ca05bc7470c967e0, type: 3}
+  m_Name: Bulletcharacteristics
+  m_EditorClassIdentifier: 
+  tag: NormalBullet
+  prefab: {fileID: 8926540691098824659, guid: fe6bf606aeeda604a99ba7047fedeee5, type: 3}
+  speed: 8
+  size: 0.1
+  damage: 100
+  maxCollisions: 1
+  lifespan: 8
+  spawnRate: 19
+  defaultSpeed: 5
+  defaultSize: 0.1
+  defaultDamage: 50
+  defaultMaxCollisions: 1
+  defaultLifespan: 8
+  defaultSpawnRate: 15
+  OnBulletDataChanged:
+    m_PersistentCalls:
+      m_Calls: []

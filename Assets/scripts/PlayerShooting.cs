@@ -1,32 +1,66 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject bulletPrefab; // Prefab of the bullet
-    public GameObject bigBulletPrefab; // Prefab of the big bullet
-    public float defaultShootingInterval = 1f; // Default time interval between shots
-    public float bulletSpeed = 10f; // Speed of the bullet
-    public float maxShootingDistance = 10f; // Maximum shooting distance
+    public string objectPoolTag = "Bullet"; // Default tag for the object pool on ObjectPoolManager
+    private ObjectPool objectPool;
+    public float maxShootingDistance = 10f;
+    public BulletData currentBulletData;
 
-    private GameObject targetEnemy; // Closest enemy
-    private float shootingInterval; // Current shooting interval
-    private Coroutine shootFasterCoroutine; // Reference to the coroutine for shooting faster
-    private Coroutine bigBulletCoroutine; // Reference to the coroutine for big bullet
-    private GameObject currentBulletPrefab; // Current bullet prefab
+    private GameObject targetEnemy;
+    private float shootingInterval;
+    private float lastSpawnRate;
 
     void Start()
     {
-        shootingInterval = defaultShootingInterval;
-        currentBulletPrefab = bulletPrefab; // Initialize with the default bullet prefab
+        FindObjectPoolManager();
+
+        if (currentBulletData == null)
+        {
+            Debug.LogError("BulletData reference is not set in the PlayerShooting script.");
+            return;
+        }
+
+        if (objectPool == null)
+        {
+            Debug.LogError("ObjectPool reference is not set or ObjectPoolManager not found.");
+            return;
+        }
+
+        // Initialize shooting interval based on the initial spawn rate
+        lastSpawnRate = currentBulletData.spawnRate;
+        shootingInterval = 1f / lastSpawnRate;
+
         StartCoroutine(ShootAtInterval());
     }
 
     void Update()
     {
-        // Find the closest enemy
         targetEnemy = FindClosestEnemy();
+
+        // Check for updates in BulletData
+        if (currentBulletData.spawnRate != lastSpawnRate)
+        {
+            UpdateShootingInterval();
+        }
+    }
+
+    void FindObjectPoolManager()
+    {
+        GameObject objectPoolManager = GameObject.Find("ObjectPoolManager");
+        if (objectPoolManager != null)
+        {
+            objectPool = objectPoolManager.GetComponent<ObjectPool>();
+            if (objectPool == null)
+            {
+                Debug.LogError("ObjectPool component not found on ObjectPoolManager.");
+            }
+        }
+        else
+        {
+            Debug.LogError("ObjectPoolManager GameObject not found in the scene.");
+        }
     }
 
     IEnumerator ShootAtInterval()
@@ -37,8 +71,15 @@ public class PlayerShooting : MonoBehaviour
             {
                 Shoot();
             }
+
             yield return new WaitForSeconds(shootingInterval);
         }
+    }
+
+    void UpdateShootingInterval()
+    {
+        lastSpawnRate = currentBulletData.spawnRate;
+        shootingInterval = 1f / lastSpawnRate;
     }
 
     GameObject FindClosestEnemy()
@@ -71,55 +112,23 @@ public class PlayerShooting : MonoBehaviour
         if (targetEnemy != null)
         {
             Vector2 direction = (targetEnemy.transform.position - transform.position).normalized;
-            GameObject bullet = Instantiate(currentBulletPrefab, transform.position, Quaternion.identity);
-            bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-        }
-    }
+            GameObject bullet = objectPool.SpawnFromPool(objectPoolTag, transform.position, Quaternion.identity);
 
-    // Method to start shooting faster for a duration
-    void StartShootingFaster(float duration)
-    {
-        if (shootFasterCoroutine != null)
-        {
-            StopCoroutine(shootFasterCoroutine);
-        }
-        shootFasterCoroutine = StartCoroutine(ShootingFasterCoroutine(duration));
-    }
+            if (bullet == null)
+            {
+                Debug.LogError($"Failed to spawn bullet with tag {objectPoolTag} from the object pool.");
+                return;
+            }
 
-    IEnumerator ShootingFasterCoroutine(float duration)
-    {
-        shootingInterval = 0.05f; // Change the shooting interval
-        yield return new WaitForSeconds(duration);
-        shootingInterval = defaultShootingInterval; // Revert back to default interval
-    }
-
-    // Method to start shooting big bullets for a duration
-    void StartShootingBigBullets(float duration)
-    {
-        if (bigBulletCoroutine != null)
-        {
-            StopCoroutine(bigBulletCoroutine);
-        }
-        bigBulletCoroutine = StartCoroutine(ShootingBigBulletsCoroutine(duration));
-    }
-
-    IEnumerator ShootingBigBulletsCoroutine(float duration)
-    {
-        currentBulletPrefab = bigBulletPrefab; // Change to big bullet prefab
-        yield return new WaitForSeconds(duration);
-        currentBulletPrefab = bulletPrefab; // Revert back to default bullet prefab
-    }
-
-    // Method to receive messages
-    void ReceiveMessage(string message)
-    {
-        if (message == "ShootFaster")
-        {
-            StartShootingFaster(10f); // Start shooting faster for 10 seconds
-        }
-        else if (message == "BigBullet")
-        {
-            StartShootingBigBullets(10f); // Start shooting big bullets for 10 seconds
+            BulletController bulletController = bullet.GetComponent<BulletController>();
+            if (bulletController != null)
+            {
+                bulletController.Initialize(direction, currentBulletData, objectPool, objectPoolTag);
+            }
+            else
+            {
+                Debug.LogError("BulletController component not found on the spawned bullet.");
+            }
         }
     }
 }

@@ -143,7 +143,7 @@ MonoBehaviour:
       m_Name: Adaptive Framerate
       m_Enabled: 0
       m_Scale: 1
-      m_VisualImpact: 2
+      m_VisualImpact: 0
       m_Target: 7
       m_MaxLevel: 45
       m_MinBound: 15
@@ -256,6 +256,6 @@ MonoBehaviour:
       m_MaxLevel: 40
       m_MinBound: 50
       m_MaxBound: 1000
-    m_Name: Default Scaler Profile
+    m_Name: New Scaler Profile
   m_DefaultScalerProfilerIndex: 0
   k_AssetVersion: 2

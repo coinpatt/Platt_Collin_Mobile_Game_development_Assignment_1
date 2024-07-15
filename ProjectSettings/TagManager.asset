@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - Bullet
   - Reward
+  - objectPool
+  - rewardclick
   layers:
   - Default
   - TransparentFX
@@ -19,9 +21,9 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
-  - 
-  - 
+  - mainchar
+  - bullet
+  - onlyclick
   - 
   - 
   - 
@@ -47,4 +49,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3707588003
+    locked: 0
+  - name: Coins
+    uniqueID: 3525523393
+    locked: 0
+  - name: Bullets
+    uniqueID: 2664621215
+    locked: 0
+  - name: Enemy
+    uniqueID: 994375773
+    locked: 0
+  - name: MainChar
+    uniqueID: 2687388299
+    locked: 0
+  - name: UI
+    uniqueID: 1270277409
     locked: 0

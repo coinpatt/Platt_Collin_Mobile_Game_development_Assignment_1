@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6606471172814731094}
   - component: {fileID: -7899616498532326905}
   - component: {fileID: 8969836152677225960}
-  - component: {fileID: -470312419848576}
-  m_Layer: 0
+  - component: {fileID: -2799397765310174939}
+  - component: {fileID: -8707310875138185367}
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1630346081
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: fdda0212744510940b0b66e4dccb55fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,9 +123,9 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &-470312419848576
+--- !u!114 &-2799397765310174939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,9 +134,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8926540691098824659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f161ea7ad7a1e4881fa79f05f56cf0, type: 3}
+  m_Script: {fileID: 11500000, guid: de1842f0773958e4b8f34c23a5501988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
-  maxCollisions: 2
-  lifespan: 5
+--- !u!114 &-8707310875138185367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926540691098824659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8a75ef132c0824eb2485fd97285efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletData: {fileID: 11400000, guid: 7aa05fd17c076c14a82d2dc84eb16823, type: 2}

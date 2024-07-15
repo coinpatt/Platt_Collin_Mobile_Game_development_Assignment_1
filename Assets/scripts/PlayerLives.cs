@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerLives : MonoBehaviour
 {
     public int lives = 3; // Starting lives
+    public GameManager gameManager; // Reference to the GameManager
 
     void Start()
     {
@@ -28,7 +29,20 @@ public class PlayerLives : MonoBehaviour
 
         if (lives <= 0)
         {
+            NotifyGameManager(); // Notify GameManager that player has no lives left
             DespawnPlayer();
+        }
+    }
+
+    void NotifyGameManager()
+    {
+        if (gameManager != null)
+        {
+            gameManager.MainCharacterDestroyed(); // Notify GameManager
+        }
+        else
+        {
+            Debug.LogError("GameManager reference is not set in PlayerLives.");
         }
     }
 

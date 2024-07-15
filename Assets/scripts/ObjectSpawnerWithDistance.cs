@@ -1,38 +1,93 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class ObjectSpawnerWithDistance : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> objectsToSpawn;  // List of objects that can be spawned
-    [SerializeField] private int numberOfObjectsToSpawn;       // Number of objects to spawn
-    [SerializeField] private Transform targetObject;           // The reference object to spawn around
-    [SerializeField] private float minDistance;                // Minimum distance from the target object
-    [SerializeField] private float maxDistance;                // Maximum distance from the target object
+    [SerializeField] private EnemyData enemyData;      // Scriptable object reference
+    private ObjectPool objectPool;    // Reference to ObjectPool instance
+    public string objectPoolTag = "ObjectPoolTag"; // Tag name of the ObjectPool
+    public string objectPoolManagerName = "ObjectPoolManager"; // Name of the ObjectPoolManager GameObject
 
-    public void SpawnObjects()
+    private bool canSpawnEnemies = false;  // Flag to check if spawning is allowed
+
+    private void Start()
     {
-        for (int i = 0; i < numberOfObjectsToSpawn; i++)
+        // Find the ObjectPoolManager instance based on its name
+        GameObject objectPoolManager = GameObject.Find(objectPoolManagerName);
+        if (objectPoolManager != null)
         {
-            // Get a random position around the target object
-            Vector2 randomPosition = GetRandomPositionAroundTarget();
-            // Instantiate a random object from the list
-            GameObject objectToSpawn = objectsToSpawn[Random.Range(0, objectsToSpawn.Count)];
-            Instantiate(objectToSpawn, randomPosition, Quaternion.identity);
+            // Get the ObjectPool component from the ObjectPoolManager using the tag
+            objectPool = objectPoolManager.GetComponent<ObjectPool>();
+            if (objectPool == null)
+            {
+                Debug.LogError($"ObjectPool with tag '{objectPoolTag}' not found on {objectPoolManagerName}.");
+            }
+            else
+            {
+                Debug.Log($"ObjectSpawner initialized with ObjectPool from {objectPoolManagerName} with tag '{objectPoolTag}'.");
+            }
         }
+        else
+        {
+            Debug.LogError($"ObjectPoolManager GameObject with name '{objectPoolManagerName}' not found.");
+        }
+    }
+
+    public void OnClickSpawn()
+    {
+        if (canSpawnEnemies && enemyData != null && objectPool != null)
+        {
+            SpawnEnemies();
+        }
+    }
+
+    public void StartSpawning()
+    {
+        canSpawnEnemies = true;
+    }
+
+    public void StopSpawning()
+    {
+        canSpawnEnemies = false;
+    }
+
+    public void SpawnEnemies()
+    {
+        for (int i = 0; i < enemyData.numberOfEnemiesToSpawn; i++)
+        {
+            Vector2 randomPosition = GetRandomPositionAroundTarget();
+            SpawnEnemy(randomPosition);
+        }
+    }
+
+    private void SpawnEnemy(Vector2 position)
+    {
+        if (enemyData.enemyPrefab == null || objectPool == null)
+        {
+            Debug.LogError("Enemy prefab or ObjectPool is not set.");
+            return;
+        }
+
+        GameObject enemy = objectPool.SpawnFromPool(objectPoolTag, position, Quaternion.identity);
+
+        if (enemy == null)
+        {
+            Debug.LogError($"Failed to spawn enemy with tag {objectPoolTag} from the object pool.");
+            return;
+        }
+
+        enemy.transform.position = position; // Set the enemy's position
     }
 
     private Vector2 GetRandomPositionAroundTarget()
     {
         Vector2 randomPosition = Vector2.zero;
-        float distance = Random.Range(minDistance, maxDistance);
+        float distance = Random.Range(enemyData.minDistance, enemyData.maxDistance);
         float angle = Random.Range(0f, 2f * Mathf.PI);
 
-        randomPosition.x = targetObject.position.x + distance * Mathf.Cos(angle);
-        randomPosition.y = targetObject.position.y + distance * Mathf.Sin(angle);
+        randomPosition.x = transform.position.x + distance * Mathf.Cos(angle);
+        randomPosition.y = transform.position.y + distance * Mathf.Sin(angle);
 
         return randomPosition;
     }
 }
-
